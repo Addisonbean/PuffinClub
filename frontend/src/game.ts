@@ -1,8 +1,6 @@
-import { objectSize } from "./util";
-
-interface ImageMap {
-	[key: string]: HTMLImageElement;
-}
+import { objectSize } from './util';
+import { ImageMap } from './lib';
+import Player from './player';
 
 function loadImages(callback: (images: ImageMap) => void) {
 	const allImages: ImageMap = {
@@ -17,16 +15,6 @@ function loadImages(callback: (images: ImageMap) => void) {
 			}
 		});
 		allImages[url].src = url;
-	}
-}
-
-interface Sprite {
-	drawAt(x: number, y: number, images: ImageMap, ctx: CanvasRenderingContext2D): void;
-}
-
-class Player implements Sprite {
-	drawAt(x: number, y: number, images: ImageMap, ctx: CanvasRenderingContext2D) {
-		ctx.drawImage(images['img/puffin.jpg'], 0, 0);
 	}
 }
 
