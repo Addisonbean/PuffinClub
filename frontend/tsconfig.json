@@ -8,6 +8,6 @@
 		"alwaysStrict": true
 	},
 	"include": [
-        "src/game.ts"
-    ]
+		"src/game.ts"
+	]
 }
