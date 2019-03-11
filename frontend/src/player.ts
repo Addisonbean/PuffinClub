@@ -5,10 +5,14 @@ export default class Player implements Sprite {
 	speed = 7;
 	x: number;
 	y: number;
+	width: number;
+	height: number;
 
-	constructor(x: number, y: number) {
+	constructor(x: number, y: number, width: number, height: number) {
 		this.x = x;
 		this.y = y;
+		this.width = width;
+		this.height = height;
 	}
 
 	moveTowardDirection(directions: Direction[]) {
@@ -27,6 +31,6 @@ export default class Player implements Sprite {
 
 	draw(images: ImageMap, ctx: CanvasRenderingContext2D) {
 		ctx.fillStyle = 'red';
-		ctx.fillRect(this.x, this.y, 100, 100);
+		ctx.fillRect(this.x, this.y, this.width, this.height);
 	}
 }

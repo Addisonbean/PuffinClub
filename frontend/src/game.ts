@@ -1,6 +1,7 @@
 import { objectSize } from './util';
 import { ImageMap, KeyMap, Direction } from './lib';
 import Player from './player';
+import { makeStartMap } from './maps/start';
 
 const allImages: ImageMap = {
 	'img/puffin.jpg': new Image(),
@@ -28,9 +29,9 @@ const CANVAS_HEIGHT = 500;
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 
-const p = new Player(0, 0);
-
+const p = new Player(0, 0, 100, 100);
 const keysPressed: KeyMap = {};
+const startMap = makeStartMap();
 
 window.addEventListener('keydown', function(e) {
 	keysPressed[e.keyCode] = true;
@@ -56,6 +57,11 @@ function update() {
 
 function draw() {
 	ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+	for (let e of startMap.sprites) {
+		e.draw(allImages, ctx);
+	}
+
 	p.draw(allImages, ctx);
 }
 
