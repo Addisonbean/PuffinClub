@@ -6,11 +6,16 @@ interface KeyMap {
 	[key: number]: boolean | undefined;
 }
 
-enum Direction {
-	Up,
-	Down,
-	Left,
-	Right,
+interface Point {
+	x: number;
+	y: number;
 }
 
-export { ImageMap, KeyMap, Direction };
+enum KeyCode {
+	Left = 37,
+	Up = 38,
+	Right = 39,
+	Down = 40,
+}
+
+export { ImageMap, KeyMap, Point, KeyCode };

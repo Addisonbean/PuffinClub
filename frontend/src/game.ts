@@ -1,5 +1,5 @@
 import { objectSize } from './util';
-import { ImageMap, KeyMap, Direction } from './lib';
+import { ImageMap, KeyMap, KeyCode } from './lib';
 import Player from './player';
 import { makeStartMap } from './maps/start';
 
@@ -46,13 +46,24 @@ function isKeyDown(keyCode: number): boolean {
 }
 
 function update() {
-	const directions = [];
-	if (isKeyDown(37)) directions.push(Direction.Left);
-	if (isKeyDown(38)) directions.push(Direction.Up);
-	if (isKeyDown(39)) directions.push(Direction.Right);
-	if (isKeyDown(40)) directions.push(Direction.Down);
+	const direction = { x: 0, y: 0 };
 
-	p.moveTowardDirection(directions);
+	if (isKeyDown(KeyCode.Left)) direction.x -= 1;
+	if (isKeyDown(KeyCode.Up)) direction.y -= 1;
+	if (isKeyDown(KeyCode.Right)) direction.x += 1;
+	if (isKeyDown(KeyCode.Down)) direction.y += 1;
+
+	let playerPositionChange = { x: direction.x * p.speed, y: direction.y * p.speed };
+	const playerBox = p.collisionBox();
+	for (let e of startMap.collidables) {
+		const newChange = playerBox.fixChangeIfConflict(e.collisionBox(), playerPositionChange);
+		if (newChange) {
+			playerPositionChange = newChange;
+			break;
+		}
+	}
+
+	p.moveBy(playerPositionChange);
 }
 
 function draw() {

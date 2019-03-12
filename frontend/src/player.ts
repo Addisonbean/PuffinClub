@@ -1,7 +1,8 @@
 import Sprite from './sprite';
-import { ImageMap, Direction } from './lib';
+import { ImageMap, Point } from './lib';
+import { Collidable, CollisionBox } from './collisions';
 
-export default class Player implements Sprite {
+export default class Player implements Sprite, Collidable {
 	speed = 7;
 	x: number;
 	y: number;
@@ -15,22 +16,17 @@ export default class Player implements Sprite {
 		this.height = height;
 	}
 
-	moveTowardDirection(directions: Direction[]) {
-		for (let d of directions) {
-			if (d === Direction.Up) {
-				this.y -= this.speed;
-			} else if (d === Direction.Down) {
-				this.y += this.speed;
-			} else if (d === Direction.Left) {
-				this.x -= this.speed;
-			} else if (d === Direction.Right) {
-				this.x += this.speed;
-			}
-		}
+	moveBy(dists: Point) {
+		this.x += dists.x;
+		this.y += dists.y;
 	}
 
 	draw(images: ImageMap, ctx: CanvasRenderingContext2D) {
 		ctx.fillStyle = 'red';
 		ctx.fillRect(this.x, this.y, this.width, this.height);
+	}
+
+	collisionBox(): CollisionBox {
+		return new CollisionBox(this.x, this.y, this.width, this.height);
 	}
 }
